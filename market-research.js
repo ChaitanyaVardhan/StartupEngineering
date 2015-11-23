@@ -6,15 +6,15 @@ var rest = require('restler');
 var csv = require('csv');
 var accounting = require('accounting');
 var CSVFILE_DEFAULT = "market-research.csv";
-var SYMBOLS_DEFAULT = ["GOOG", "FB", "APPL", "YHOO", "MSFT", "LNKD", "CRM"];
+var SYMBOLS_DEFAULT = ["GOOG", "FB", "AAPL", "YHOO", "MSFT", "LNKD", "CRM"];
 var COLUMNS_DEFAULT = 'snj1pr';
 var HEADERS_DEFAULT = ["Symbol", "Name", "Market Cap", "Previous Close Price", "P/E Ratio", "Shares", "EPS", "Earnings"];
 
 var marketResearch = function(symbols, column, csvfile, headers) {
-    symbols = symbols || SYMBOLS_DEFAULT;
-    columns = columns || COLUMNS_DEFAULT;
-    csvfile = csvfile || CSVFILE_DEFAULT;
-    headers = headers || HEADERS_DEFAULT;
+    var symbols = symbols || SYMBOLS_DEFAULT;
+    var columns = columns || COLUMNS_DEFAULT;
+    var csvfile = csvfile || CSVFILE_DEFAULT;
+    var headers = headers || HEADERS_DEFAULT;
     var apiurl = financeurl(symbols, columns);
     var response2console = buildfn(csvfile, headers);
     rest.get(apiurl).on('complete', response2console);
@@ -27,7 +27,7 @@ var buildfn = function(csvfile, headers) {
 	    } else {
 		console.error("Wrote %s", csvfile);
 		fs.writeFileSync(csvfile, result);
-		csv2console(csvfile, headers);
+	     //	csv2console(csvfile, headers);
 }
 };
 return response2console;
@@ -59,7 +59,7 @@ var marketCapFloat = function(marketCapString) {
 
 if(require.main == module) {
     console.error('Invoked at command line.');
-    var symbols = processs.argv;
+    var symbols = process.argv;
     if(symbols.length > 2) {
 	symbols = symbols.slice(2,symbols.length);
     } else {
